@@ -60,6 +60,7 @@ guest-linux-prebuilt:
 	tar xvzf linux-riscv-build.tar.gz
 	mkdir -p linux-build-tmp
 	mkdir -p linux-riscv-build2
+	cp kernelconfig linux-build-tmp/.config
 	cp -r linux-riscv-build/* linux-build-tmp/
 	cp -r linux-riscv-build/* linux-riscv-build2/
 	touch linux-build-tmp/arch/riscv/boot/Image
