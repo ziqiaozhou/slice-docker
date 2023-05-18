@@ -14,10 +14,15 @@ setup:
 
 all: slice-ubuntu linux-5.15-rc4 payload-build qemu
 
+quick-build: slice-ubuntu qemu-prebuilt guest-linux-prebuilt payload-build
+
+riscv-install: install
+
 install:
 	wget https://github.com/MSRSSP/slice-docker-env/releases/download/prebuilt/riscv-tools.tar.gz
 	tar xvzf riscv-tools.tar.gz
 	chmod +x install/rv64/bin/*
+
 slice-ubuntu:
 	docker build docker/ --tag ${dimage}
 qemu/build:
@@ -85,4 +90,5 @@ run: payload-build qemu
 
 clean:
 	rm -r slice-hss/Default-qemu
+	rm -r linux-build-tmp
 	find -type f -name "*.o" -delete

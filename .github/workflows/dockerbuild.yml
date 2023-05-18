@@ -16,19 +16,19 @@ jobs:
         shell: bash
         run: make slice-ubuntu && docker build demo --tag slice-demo
 
-  quick-build:
+  build-all:
     runs-on: ubuntu-latest
     steps:
       - name: checkout sources
         uses: actions/checkout@v2
 
-      - name: quick build
+      - name: build all except for the riscv toolchain
         shell: bash
         run: |
           make setup
           make all
 
-  build-sliceloaderonly:
+  quick-build-option1:
     runs-on: ubuntu-latest
     steps:
       - name: checkout sources
@@ -39,17 +39,8 @@ jobs:
         run: |
           make setup
           make slice-ubuntu
-      - name: install riscv toolchain
-        run: make install
-      - name: build sliceloader
+
+      - name: build sliceloader with prebuilt guest linux + qemu + riscv toolchain
         shell: bash
-        run: make slice-hss/Default-qemu/hss-envm-wrapper.bin
-      - name: download guest linux
-        shell: bash
-        run: make guest-linux-prebuilt
-      - name: build sd image
-        shell: bash
-        run: |
-          make payload-build
-          make qemu-prebuilt
+        run: make quick-build
 
