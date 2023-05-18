@@ -66,6 +66,7 @@ To use our tutorial, please put your riscv toolchain in
 Run the following commands to download and build Linux:
 
 ```
+make linux-5.15-rc4
 make linux-riscv-build
 make linux-riscv-build2
 ```
@@ -75,9 +76,7 @@ We have two guest Images for two guest slices. Here we lazily use one build for 
 #### Option2: Use our pre-built images
 
 ```
-wget https://github.com/MSRSSP/slice-docker-env/releases/download/prebuilt/linux-riscv-build.tar.gz
-tar xvzf linux-riscv-build.tar.gz
-cp -r linux-riscv-build linux-riscv-build2
+make guest-linux-prebuilt
 ```
 
 ### Build our modified qemu
@@ -93,8 +92,7 @@ make qemu
 #### Option2: Use our pre-built qemu
 
 ```
-curl -L -O https://github.com/MSRSSP/slice-docker-env/releases/download/prebuilt/qemu-build.tar.gz
-tar xvzf qemu-build.tar.gz
+make qemu-prebuilt
 ```
 
 ## Build Slice firmware and create payload

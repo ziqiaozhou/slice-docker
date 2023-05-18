@@ -12,7 +12,7 @@ setup:
 	git submodule update --init --progress slice-hss qemu
 	cd slice-hss && git submodule update --init --recursive  --progress
 
-all: slice-ubuntu payload-build qemu
+all: slice-ubuntu linux-5.15-rc4 payload-build qemu
 
 install:
 	wget https://github.com/MSRSSP/slice-docker-env/releases/download/prebuilt/riscv-tools.tar.gz
@@ -33,7 +33,7 @@ qemu: qemu/build
 linux-5.15-rc4: install
 	git clone https://github.com/torvalds/linux --branch v5.15-rc4 --depth 1 linux-5.15-rc4
 	cd linux-5.15-rc4 && git apply ../0001-Add-microchip-specific-clock-and-devices.patch
-linux-build-tmp/.config: linux-5.15-rc4
+linux-build-tmp/.config:
 	mkdir -p linux-build-tmp
 	cp kernelconfig linux-build-tmp/.config
 
