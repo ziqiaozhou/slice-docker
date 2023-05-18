@@ -6,6 +6,16 @@ on:
       - pub-repo
 
 jobs:
+  quick-start:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout sources
+        uses: actions/checkout@v2
+
+      - name: build docker
+        shell: bash
+        run: make slice-ubuntu && docker build demo --tag slice-demo
+
   quick-build:
     runs-on: ubuntu-latest
     steps:
@@ -18,7 +28,7 @@ jobs:
           make setup
           make all
 
-  build:
+  build-sliceloaderonly:
     runs-on: ubuntu-latest
     steps:
       - name: checkout sources
@@ -34,11 +44,12 @@ jobs:
       - name: build sliceloader
         shell: bash
         run: make slice-hss/Default-qemu/hss-envm-wrapper.bin
-      - name: build guest linux
+      - name: download guest linux
         shell: bash
-        run: make linux-riscv-build && make linux-riscv-build2
+        run: make guest-linux-prebuilt
       - name: build sd image
         shell: bash
         run: |
           make payload-build
-          make qemu
+          make qemu-prebuilt
+
